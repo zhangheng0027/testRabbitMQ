@@ -1,0 +1,7 @@
+spring:
+  rabbitmq:
+    host: 192.168.115.248
+    virtualHost: /test
+    username: oee
+    password: 123
+    port: 4626
