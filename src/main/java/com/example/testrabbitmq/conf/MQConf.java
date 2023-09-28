@@ -16,6 +16,18 @@ public class MQConf {
     @Resource
     CachingConnectionFactory connectionFactory;
 
+    @Bean(name = "ListenerContainerFactory")
+    public RabbitListenerContainerFactory<SimpleMessageListenerContainer> rabbitConfig() {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setPrefetchCount(1);
+        factory.setConcurrentConsumers(1);
+        Jackson2JsonMessageConverter jackson2JsonMessageConverter = new Jackson2JsonMessageConverter(new ObjectMapper());
+        factory.setMessageConverter(jackson2JsonMessageConverter);
+
+        return factory;
+    }
+
     @Bean(name = "batchListenerContainerFactory")
     public RabbitListenerContainerFactory<SimpleMessageListenerContainer> rabbitConfig1() {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
